@@ -21,7 +21,8 @@ def time_get():
 #To-do List
 To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2],align="left")
 
-
+global Todolist
+global Selectedlist
 Todolist=[]
 Selectedlist=[]
 
@@ -33,11 +34,13 @@ Display_list.font="Century Gothic Bold"
 
 def clear_todolist():
     global Display_list
+    global Todolist
     for i in Todolist:
         Display_list.remove(i)
     Display_list.destroy()
     Todolist.clear()
     create_list()
+    print(Todolist)
 def create_list():
     global Display_list
     Display_list = ButtonGroup(app, options=Todolist, selected=Selectedlist, align="left", grid=[0,3])
@@ -54,6 +57,7 @@ Add_textbox.font="Century Gothic Bold"
 Add_textbox.bg="white"
 def addto_todolist():
     global Display_list
+    global Todolist
     if(Add_textbox.value):
         Todolist.append(Add_textbox.value)
         Display_list.append(Add_textbox.value)
@@ -65,6 +69,19 @@ Addbutton.bg="light gray"
 Addbutton.font="Century Gothic Bold"
 Addbutton.text_size="12"
 
+def delfrom_todolist():
+    global Display_list
+    global Todolist
+    if(Display_list.value_text != ""):
+        Todolist.remove(Display_list.value_text)
+        Display_list.remove(Display_list.value_text)
+    print(Todolist)
+
+Addbutton = PushButton(app, command=delfrom_todolist, text="Delete", grid=[1,4], align="left")
+Addbutton.text_color="Black"
+Addbutton.bg="light gray"
+Addbutton.font="Century Gothic Bold"
+Addbutton.text_size="12"
 
 Clearbutton = PushButton(app, command=clear_todolist, text="Clear", grid=[0,5], align="left")
 Clearbutton.text_color="Black"
