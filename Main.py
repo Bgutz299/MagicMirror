@@ -1,3 +1,6 @@
+#!/usr/bin/enb python
+# -*- coding:utf-8 -*-
+
 from guizero import App,Text,ButtonGroup,PushButton,TextBox,Drawing		#https://pypi.org/project/guizero/
 from datetime import date, datetime
 from time import sleep
@@ -128,7 +131,7 @@ weather_font_color = which_color(description)
 Image_picture = which_image(description)
 #Image_picture = "Cloudy_sky.png"
 #print(Image_picture)
-Weather_drawing.image(0,0,image="Images\\" + Image_picture, width=400,height=300)
+Weather_drawing.image(0,0,image="Images/" + Image_picture, width=400,height=300)
 temp = str(10) + "°F"
 temp_high = str(10) + "°F"
 temp_min = str(100) + "°F"
