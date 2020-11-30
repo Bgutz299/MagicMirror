@@ -106,8 +106,8 @@ Clearbutton.text_size="12"
 
 #Weather Drawing
 city_name = "Indio"
-#temp, temp_min, temp_high, description = Weather.fetchWeather(city_name)
-description = "broken clouds"
+temp, temp_min, temp_high, description = Weather.fetchWeather(city_name)
+#description = "mist"
 Weather_drawing = Drawing(app,grid=[0,6],align="left",width=400,height=300)
 #Weather_drawing.rectangle(0,0,1000,1000,"white")
 def which_image(description):
@@ -116,7 +116,11 @@ def which_image(description):
         "few clouds": "Cloudy_sky.png",
         "scattered clouds": "Scattered_clouds.png",
         "broken clouds": "Broken_clouds.png",
-        "shower rain": ""
+        "shower rain": "rain.png",
+        "rain":"rain.png",
+        "thunderstorm":"thunderstorm.png",
+        "snow":"snow.png",
+        "mist":"mist.png"
     }
     return switcher.get(description, "Clear_sky.png")
 def which_color(description):
@@ -124,7 +128,12 @@ def which_color(description):
         "clear sky": "black",
         "few clouds": "white",
         "scattered clouds": "black",
-        "broken clouds": "white"
+        "broken clouds": "white",
+        "rain":"white",
+        "shower rain": "white",
+        "thunderstorm":"white",
+        "snow":"white",
+        "mist":"black"
     }
     return switcher.get(description, "black")
 weather_font_color = which_color(description)
@@ -132,16 +141,13 @@ Image_picture = which_image(description)
 #Image_picture = "Cloudy_sky.png"
 #print(Image_picture)
 Weather_drawing.image(0,0,image="Images/" + Image_picture, width=400,height=300)
-temp = str(10) + "°F"
-temp_high = str(10) + "°F"
-temp_min = str(100) + "°F"
 city_num_x = 200 - (len(city_name)*10)
 city_num_y = 0
 
-Weather_drawing.text(city_num_x,city_num_y, text= city_name, color=weather_font_color,font="Arial",size=30)
-Weather_drawing.text(135 - len(temp),40, text= temp, color=weather_font_color,font="Arial",size=40)
-Weather_drawing.text(130 - len(temp),95, text= "Low:" + temp_min, color=weather_font_color,font="Arial",size=10)
-Weather_drawing.text(200 - len(temp) + len(temp_high)*2,95, text= "High:" + temp_high, color=weather_font_color,font="Arial",size=10)
+Weather_drawing.text(city_num_x,city_num_y, text= city_name, color=weather_font_color,font="Arial",size=40)
+Weather_drawing.text(135 - len(temp),45, text= temp, color=weather_font_color,font="Arial",size=50)
+Weather_drawing.text(110 - len(temp),110, text= "Low:" + temp_min, color=weather_font_color,font="Arial",size=15)
+Weather_drawing.text(225 - len(temp) + len(temp_high)*2,110, text= "High:" + temp_high, color=weather_font_color,font="Arial",size=15)
 
     
 Time_display.repeat(1000, time_update)

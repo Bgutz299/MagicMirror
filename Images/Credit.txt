@@ -2,3 +2,6 @@ Clear_sky.png by Francesco Ungaro (pexels.com)
 Cloudy_sky.png by Filipe Gomes (pexels.com)
 Scattered_clouds.png by Surendra Singh Shekhawat (pexels.com)
 Broken_clouds.png by Prashant Gautam (pexels.com)
+rain.png by Markus Spiske
+snow.png by Egor Kamelev
+mist.png by Lum3n
