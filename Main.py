@@ -102,14 +102,18 @@ Clearbutton.bg="light gray"
 Clearbutton.font="Century Gothic Bold"
 Clearbutton.text_size="12"
 
+#Temperature and Weather
 #########################################################################################################
 
 #Weather Drawing
 city_name = "Indio"
-temp, temp_min, temp_high, description = Weather.fetchWeather(city_name)
-#description = "mist"
+global temp, temp_min, temp_high, description
+def update_weather():
+    global temp, temp_min, temp_high, description
+    temp, temp_min, temp_high, description = Weather.fetchWeather(city_name)
+#temp, temp_min, temp_high, description = "87°F", "80°F", "94°F", "snow"
 Weather_drawing = Drawing(app,grid=[0,6],align="left",width=400,height=300)
-#Weather_drawing.rectangle(0,0,1000,1000,"white")
+update_weather()
 def which_image(description):
     switcher ={
         "clear sky": "Clear_sky.png",
@@ -138,8 +142,6 @@ def which_color(description):
     return switcher.get(description, "black")
 weather_font_color = which_color(description)
 Image_picture = which_image(description)
-#Image_picture = "Cloudy_sky.png"
-#print(Image_picture)
 Weather_drawing.image(0,0,image="Images/" + Image_picture, width=400,height=300)
 city_num_x = 200 - (len(city_name)*10)
 city_num_y = 0
@@ -151,4 +153,5 @@ Weather_drawing.text(225 - len(temp) + len(temp_high)*2,110, text= "High:" + tem
 
     
 Time_display.repeat(1000, time_update)
+Weather_drawing.repeat(600000, update_weather)
 app.display()
