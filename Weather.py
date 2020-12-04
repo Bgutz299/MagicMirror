@@ -12,9 +12,13 @@ def fetchWeather(city_name):
     temp_min = int(data['main']['temp_min'])
     temp_high = int(data['main']['temp_max'])
     description = data['weather'][0]['description']
+    humidity = int(data['main']['humidity'])
+    wind_speed = int(data['wind']['speed'])
     str_temp = str(temp) + "°F"
     str_temp_min = str(temp_min) + "°F"
     str_temp_high = str(temp_high) + "°F"
+    str_humidity = str(humidity) +  "%"
+    str_wind_speed = str(wind_speed) + "m/s"
 
     # Clearbutton = PushButton(app, text="Clear", grid=[0,6], align="left")
     # Clearbutton.text_color="Black"
@@ -22,7 +26,7 @@ def fetchWeather(city_name):
     # Clearbutton.font="Century Gothic Bold"
     # Clearbutton.text_size="12"
     print(description)
-    return str_temp,str_temp_min,str_temp_high,description
+    return str_temp,str_temp_min,str_temp_high,description, str_humidity, str_wind_speed
 
 if __name__ == '__main__':
     fetchWeather()
