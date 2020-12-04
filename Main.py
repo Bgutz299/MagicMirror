@@ -107,11 +107,11 @@ Clearbutton.text_size="12"
 
 #Weather Drawing
 city_name = "Indio"
-global temp, temp_min, temp_high, description
+global temp, temp_min, temp_high, description, humidity, wind_speed
 def update_weather():
-    global temp, temp_min, temp_high, description
-    temp, temp_min, temp_high, description = Weather.fetchWeather(city_name)
-#temp, temp_min, temp_high, description = "87°F", "80°F", "94°F", "snow"
+    global temp, temp_min, temp_high, description, humidity, wind_speed
+    temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
+#temp, temp_min, temp_high, description = "87°F", "80°F", "94°F", "snow", "10%", "50 m/s"
 Weather_drawing = Drawing(app,grid=[0,6],align="left",width=400,height=300)
 update_weather()
 def which_image(description):
@@ -150,8 +150,10 @@ Weather_drawing.text(city_num_x,city_num_y, text= city_name, color=weather_font_
 Weather_drawing.text(135 - len(temp),45, text= temp, color=weather_font_color,font="Arial",size=50)
 Weather_drawing.text(110 - len(temp),110, text= "Low:" + temp_min, color=weather_font_color,font="Arial",size=15)
 Weather_drawing.text(225 - len(temp) + len(temp_high)*2,110, text= "High:" + temp_high, color=weather_font_color,font="Arial",size=15)
+Weather_drawing.text(150 - len(humidity),135, text= "Humidity: " + humidity, color=weather_font_color,font="Arial",size=15)
+Weather_drawing.text(125 - len(wind_speed),155, text= "Wind Speed: " + wind_speed, color=weather_font_color,font="Arial",size=15)
 
-    
+
 Time_display.repeat(1000, time_update)
 Weather_drawing.repeat(600000, update_weather)
 app.display()
