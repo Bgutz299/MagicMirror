@@ -6,6 +6,6 @@ def date_get():
 	return today_date
 def time_get():
 	now = datetime.now()
-	now_conv = now.strftime("%I:%M %p")
+	now_conv = now.strftime("%I:%M:%S %p")
 	curr_time = now_conv
 	return curr_time
