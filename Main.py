@@ -135,7 +135,7 @@ def which_color(description):
         "clear sky": "black",
         "few clouds": "white",
         "scattered clouds": "black",
-        "broken clouds": "white",
+        "broken clouds": "black",
         "rain":"white",
         "shower rain": "white",
         "thunderstorm":"white",
@@ -165,89 +165,138 @@ def mouseClick( event ):
 app.tk.bind("<Double-Button-1>", mouseClick)
 
 global Keyboard_box
+global lower_letters, upper_letters, active_letters
+lower_letters = ["q","w","e","r","s","t","y","u","i","o","p",
+					"a","s","d","f","g","h","j","k","l",
+					"z","x","c","v","b","n","m"]
+upper_letters = ["Q","W","E","R","S","T","Y","U","I","O","P",
+					"A","S","D","F","G","H","J","K","L",
+					"Z","X","C","V","B","N","M"]
+active_letters = lower_letters
+
 #Keyboard Box
 #########################################################################################################
 def Make_keys():
 	global Keyboard_box
-	Keyboard_box = Box(app,width=600,height=200, layout="grid", grid=[0,7,2,1])
-	#Keyboard
-	Q_button = PushButton(Keyboard_box, grid=[0,0], width=2, height=2, text="Q")
+	Keyboard_box = Box(app,width=600,height=300, layout="grid", grid=[0,7,2,1])
+#Keyboard
+
+#1st Row
+	Q_button = PushButton(Keyboard_box, grid=[0,0], width=2, height=2, text="q")
 	Q_button.bg = "light gray"
+	Q_button.text_size=10
 
-	W_button = PushButton(Keyboard_box, grid=[1,0], width=2, height=2, text="W")
+	W_button = PushButton(Keyboard_box, grid=[1,0], width=2, height=2, text="w")
 	W_button.bg = "light gray"
+	W_button.text_size=10
 
-	E_button = PushButton(Keyboard_box, grid=[2,0], width=2, height=2, text="E")
+	E_button = PushButton(Keyboard_box, grid=[2,0], width=2, height=2, text="e")
 	E_button.bg = "light gray"
+	E_button.text_size=10
 
-	R_button = PushButton(Keyboard_box, grid=[3,0], width=2, height=2, text="R")
+	R_button = PushButton(Keyboard_box, grid=[3,0], width=2, height=2, text="r")
 	R_button.bg = "light gray"
+	R_button.text_size=10
 
-	T_button = PushButton(Keyboard_box, grid=[4,0], width=2, height=2, text="T")
+	T_button = PushButton(Keyboard_box, grid=[4,0], width=2, height=2, text="t")
 	T_button.bg = "light gray"
+	T_button.text_size=10
 
-	Y_button = PushButton(Keyboard_box, grid=[5,0], width=2, height=2, text="Y")
+	Y_button = PushButton(Keyboard_box, grid=[5,0], width=2, height=2, text="y")
 	Y_button.bg = "light gray"
+	Y_button.text_size=10
 
-	U_button = PushButton(Keyboard_box, grid=[6,0], width=2, height=2, text="U")
+	U_button = PushButton(Keyboard_box, grid=[6,0], width=2, height=2, text="u")
 	U_button.bg = "light gray"
+	U_button.text_size=10
 
-	I_button = PushButton(Keyboard_box, grid=[7,0], width=2, height=2, text="I")
+	I_button = PushButton(Keyboard_box, grid=[7,0], width=2, height=2, text="i")
 	I_button.bg = "light gray"
+	I_button.text_size=10
 
-	O_button = PushButton(Keyboard_box, grid=[8,0], width=2, height=2, text="O")
+	O_button = PushButton(Keyboard_box, grid=[8,0], width=2, height=2, text="o")
 	O_button.bg = "light gray"
+	O_button.text_size=10
 
-	P_button = PushButton(Keyboard_box, grid=[9,0], width=2, height=2, text="P")
+	P_button = PushButton(Keyboard_box, grid=[9,0], width=2, height=2, text="p")
 	P_button.bg = "light gray"
+	P_button.text_size=10
 
-	A_button = PushButton(Keyboard_box, grid=[0,1], width=2, height=2, text="A")
+#2nd Row
+
+	A_button = PushButton(Keyboard_box, grid=[0,1,2,1], width=2, height=2, text="a")
 	A_button.bg = "light gray"
+	A_button.text_size=10
 
-	S_button = PushButton(Keyboard_box, grid=[1,1], width=2, height=2, text="S")
+	S_button = PushButton(Keyboard_box, grid=[1,1,2,1], width=2, height=2, text="s")
 	S_button.bg = "light gray"
+	S_button.text_size=10
 
-	D_button = PushButton(Keyboard_box, grid=[2,1], width=2, height=2, text="D")
+	D_button = PushButton(Keyboard_box, grid=[2,1,2,1], width=2, height=2, text="d")
 	D_button.bg = "light gray"
+	D_button.text_size=10
 
-	F_button = PushButton(Keyboard_box, grid=[3,1], width=2, height=2, text="F")
+	F_button = PushButton(Keyboard_box, grid=[3,1,2,1], width=2, height=2, text="f")
 	F_button.bg = "light gray"
+	F_button.text_size=10
 
-	G_button = PushButton(Keyboard_box, grid=[4,1], width=2, height=2, text="G")
+	G_button = PushButton(Keyboard_box, grid=[4,1,2,1], width=2, height=2, text="g")
 	G_button.bg = "light gray"
+	G_button.text_size=10
 
-	H_button = PushButton(Keyboard_box, grid=[5,1], width=2, height=2, text="H")
+	H_button = PushButton(Keyboard_box, grid=[5,1,2,1], width=2, height=2, text="h")
 	H_button.bg = "light gray"
+	H_button.text_size=10
 
-	J_button = PushButton(Keyboard_box, grid=[6,1], width=2, height=2, text="J")
+	J_button = PushButton(Keyboard_box, grid=[6,1,2,1], width=2, height=2, text="j")
 	J_button.bg = "light gray"
+	J_button.text_size=10
 
-	K_button = PushButton(Keyboard_box, grid=[7,1], width=2, height=2, text="K")
+	K_button = PushButton(Keyboard_box, grid=[7,1,2,1], width=2, height=2, text="k")
 	K_button.bg = "light gray"
+	K_button.text_size=10
 
-	L_button = PushButton(Keyboard_box, grid=[8,1], width=2, height=2, text="L")
+	L_button = PushButton(Keyboard_box, grid=[8,1,2,1], width=2, height=2, text="l")
 	L_button.bg = "light gray"
+	L_button.text_size=10
 
-	Z_button = PushButton(Keyboard_box, grid=[1,2], width=2, height=2, text="Z")
+#3rd Row
+	shift_button = PushButton(Keyboard_box, grid=[0,2,2,1], align="left", width=2, height=2, padx=15,pady=10, text="Shift")
+	shift_button.bg = "light gray"
+	shift_button.text_size=10
+
+	Z_button = PushButton(Keyboard_box, grid=[1,2,2,1], width=2, height=2, text="z")
 	Z_button.bg = "light gray"
+	Z_button.text_size=10
 
-	X_button = PushButton(Keyboard_box, grid=[2,2], width=2, height=2, text="X")
+	X_button = PushButton(Keyboard_box, grid=[2,2,2,1], width=2, height=2, text="x")
 	X_button.bg = "light gray"
+	X_button.text_size=10
 
-	C_button = PushButton(Keyboard_box, grid=[3,2], width=2, height=2, text="C")
+	C_button = PushButton(Keyboard_box, grid=[3,2,2,1], width=2, height=2, text="c")
 	C_button.bg = "light gray"
+	C_button.text_size=10
 
-	V_button = PushButton(Keyboard_box, grid=[4,2], width=2, height=2, text="V")
+	V_button = PushButton(Keyboard_box, grid=[4,2,2,1], width=2, height=2, text="v")
 	V_button.bg = "light gray"
+	V_button.text_size=10
 
-	B_button = PushButton(Keyboard_box, grid=[5,2], width=2, height=2, text="B")
+	B_button = PushButton(Keyboard_box, grid=[5,2,2,1], width=2, height=2, text="b")
 	B_button.bg = "light gray"
+	B_button.text_size=10
 
-	N_button = PushButton(Keyboard_box, grid=[6,2], width=2, height=2, text="N")
+	N_button = PushButton(Keyboard_box, grid=[6,2,2,1], width=2, height=2, text="n")
 	N_button.bg = "light gray"
+	N_button.text_size=10
 
-	M_button = PushButton(Keyboard_box, grid=[7,2], width=2, height=2, text="M")
+	M_button = PushButton(Keyboard_box, grid=[7,2,2,1], width=2, height=2, text="m")
 	M_button.bg = "light gray"
+	M_button.text_size=10
+
+#4th Row
+	Space_button = PushButton(Keyboard_box, grid=[2,3,6,1], width=28, height=2, padx=5,pady=1, text="Space")
+	Space_button.bg = "light gray"
+	Space_button.text_size=10
 def Destroy_keys():
 	global Keyboard_box
 	Keyboard_box.destroy()
