@@ -301,7 +301,7 @@ def Make_upperkeys():
 	M_button.bg = "light gray"
 	M_button.text_size=10
 
-	backspace_button = PushButton(Keyboard_box, grid=[8,2,2,1], width=2, height=2, text="<-", command=type_function, args=upper_letters[27])
+	backspace_button = PushButton(Keyboard_box, grid=[8,2,2,1], align="right", width=2, height=2, padx=15,pady=10, text="<-", command=type_function, args=upper_letters[27])
 	backspace_button.bg = "light gray"
 	backspace_button.text_size=10
 
