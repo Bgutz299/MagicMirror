@@ -1,7 +1,7 @@
 #!/usr/bin/enb python
 # -*- coding:utf-8 -*-
 
-from guizero import App,Text,ButtonGroup,PushButton,TextBox,Drawing,Box		#https://pypi.org/project/guizero/
+from guizero import App,Text,ButtonGroup,PushButton,TextBox,Drawing,Box,Window		#https://pypi.org/project/guizero/
 from datetime import date, datetime
 from time import sleep
 import tkinter as tk
@@ -15,6 +15,11 @@ import App_init
 global app
 app = App_init.app_init()
 
+global Keyboard_box
+global keys_exist
+keys_exist = 0
+global uppercase
+
 #Date and Time
 ##########################################################################################################################
 today_date = date_time.date_get()
@@ -27,6 +32,7 @@ def time_update():
 
 #Todo List
 ##########################################################################################################################
+global To_do_list_Title
 To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
 
 global Todolist
@@ -47,6 +53,7 @@ create_list()
 
 #Text box for typing
 #########################################################################################################
+global Add_textbox
 Add_textbox=TextBox(app,grid=[0,4,1,1],width=50, align="left")
 Add_textbox.text_size=12
 Add_textbox.text_color="Black"
@@ -58,12 +65,13 @@ Add_textbox.bg="white"
 def addto_todolist():
     global Display_list
     global Todolist
+    global Add_textbox
     if(Add_textbox.value):
         Todolist.append(Add_textbox.value)
         Display_list.append(Add_textbox.value)
         print(Todolist)
         Add_textbox.clear()
-
+global Addbutton
 Addbutton = PushButton(app, command=addto_todolist, image="Images/add_button.png", grid=[0,4,1,1],align="right")
 
 #Delete from list Button and delete from list function
@@ -76,7 +84,7 @@ def delfrom_todolist():
         Display_list.remove(Display_list.value_text)
     app.focus()
     print(Todolist)
-
+global delbutton
 delbutton = PushButton(app, command=delfrom_todolist, image="Images/sub_button.png", grid=[1,4,4,1],align="right")
 
 #Clear List function and button
@@ -91,6 +99,7 @@ def clear_todolist():
 	    Todolist.clear()
 	    create_list()
 	    print(Todolist)
+global Clearbutton
 Clearbutton = PushButton(app, command=clear_todolist, image="Images/clear_button.png", grid=[0,5], width=100, height=50, align="left")
 Clearbutton.bg = "light gray"
 
@@ -98,13 +107,85 @@ Clearbutton.bg = "light gray"
 ############################################################################################################################################
 ############################################################################################################################################
 
+def init_widgets():
+	global app, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton
+	To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
+	create_list()
+	Add_textbox=TextBox(app,grid=[0,4,1,1],width=50, align="left")
+	Add_textbox.text_size=12
+	Add_textbox.text_color="Black"
+	Add_textbox.font="Century Gothic Bold"
+	Add_textbox.bg="white"
+	Addbutton = PushButton(app, command=addto_todolist, image="Images/add_button.png", grid=[0,4,1,1],align="right")
+	delbutton = PushButton(app, command=delfrom_todolist, image="Images/sub_button.png", grid=[1,4,4,1],align="right")
+	Clearbutton = PushButton(app, command=clear_todolist, image="Images/clear_button.png", grid=[0,5], width=100, height=50, align="left")
+	Clearbutton.bg = "light gray"
+	Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
+	Citybutton.bg = "light gray"
+	Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
+	weather_font_color = which_color(description)
+	Image_picture = which_image(description)
+	update_weather()
+	Weather_drawing.image(0,0,image="Images/" + Image_picture, width=600,height=400)
+	city_num_x = 200 - (len(city_name)*10)
+	city_num_y = 0
+
+	Weather_drawing.text(city_num_x,city_num_y, text= city_name, color=weather_font_color,font="Arial",size=40)
+	Weather_drawing.text(135 - len(temp),45, text= temp, color=weather_font_color,font="Arial",size=50)
+	Weather_drawing.text(110 - len(temp),110, text= "Low:" + temp_min, color=weather_font_color,font="Arial",size=15)
+	Weather_drawing.text(225 - len(temp) + len(temp_high)*2,110, text= "High:" + temp_high, color=weather_font_color,font="Arial",size=15)
+	Weather_drawing.text(150 - len(humidity),135, text= "Humidity: " + humidity, color=weather_font_color,font="Arial",size=15)
+	Weather_drawing.text(125 - len(wind_speed),155, text= "Wind Speed: " + wind_speed, color=weather_font_color,font="Arial",size=15)
+	Add_textbox.when_clicked = Make_keys
+
+
+def change_city():
+	global app
+	global window
+	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton
+	def Confirm_city():
+		global city_name
+		if(City_name_entry_textbox.value):
+			city_name = City_name_entry_textbox.value
+			Confirmbutton.destroy()
+			City_name_entry_textbox.destroy()
+			City_name_ask_title.destroy()
+			Destroy_keys()
+			init_widgets()
+	if(keys_exist == 1):
+		Destroy_keys()
+	To_do_list_Title.destroy()
+	Add_textbox.destroy()
+	Addbutton.destroy()
+	delbutton.destroy()
+	Citybutton.destroy()
+	Display_list.destroy()
+	Clearbutton.destroy()
+	Weather_drawing.destroy()
+	City_name_ask_title = Text(app, "Type the name of a city:", size=35, font="Century Gothic Bold", color="light gray", grid=[0,2,2,1],align="left")
+	City_name_entry_textbox=TextBox(app,grid=[0,3],width=50)
+	City_name_entry_textbox.text_size=12
+	City_name_entry_textbox.text_color="Black"
+	City_name_entry_textbox.font="Century Gothic Bold"
+	City_name_entry_textbox.bg="white"
+	City_name_entry_textbox.when_clicked = Make_keys
+	Confirmbutton = PushButton(app, command=Confirm_city, image="Images/Confirm.png", grid=[0,4], width=120, height=50)
+	Confirmbutton.bg = "light gray"
+	app.focus()
+global Citybutton
+Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
+Citybutton.bg = "light gray"
+
 #Weather Drawing
+global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
 city_name = "Indio"
-global temp, temp_min, temp_high, description, humidity, wind_speed
 def update_weather():
-    global temp, temp_min, temp_high, description, humidity, wind_speed
+    global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
     temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
-#temp, temp_min, temp_high, description, humidity, wind_speed = "87°F", "80°F", "94°F", "broken clouds", "10%", "50 m/s"
+    #temp, temp_min, temp_high, humidity, wind_speed = "87°F", "80°F", "94°F", "10%", "50 m/s"
+    description = "mist"
+
+global Weather_drawing
 Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
 update_weather()
 def which_image(description):
@@ -151,10 +232,6 @@ Weather_drawing.text(125 - len(wind_speed),155, text= "Wind Speed: " + wind_spee
 
 #Keyboard Module
 ############################################################################################################################################
-
-global Keyboard_box
-global keys_exist
-global uppercase
 uppercase = 0
 keys_exist = 0
 global lower_letters, upper_letters
@@ -168,13 +245,13 @@ upper_letters = ["Q","W","E","R","T","Y","U","I","O","P",
 
 #Keyboard Box
 ###########################################################################################################################################
-
 def type_function(letter):
 	global uppercase
 	global Keyboard_box
 	keyboard.write(letter)
 	if(uppercase == 1):
 		Make_keys()
+
 #Make Upper case keyboard
 def Make_upperkeys():
 	global Keyboard_box
@@ -188,7 +265,6 @@ def Make_upperkeys():
 	elif(keys_exist == 1 and uppercase == 1):
 		Keyboard_box.destroy()
 		Make_keys()
-		
 #Keyboard
 #1st Row
 	Q_button = PushButton(Keyboard_box, grid=[0,0], width=2, height=2, text=upper_letters[0], command=type_function, args=upper_letters[0])
@@ -277,7 +353,7 @@ def Make_upperkeys():
 	Z_button.bg = "light gray"
 	Z_button.text_size=10
 
-	X_button = PushButton(Keyboard_box, grid=[2,2,2,1], width=2, height=2, text=upper_letters[20], command=type_function, args=upper_letters[21])
+	X_button = PushButton(Keyboard_box, grid=[2,2,2,1], width=2, height=2, text=upper_letters[20], command=type_function, args=upper_letters[20])
 	X_button.bg = "light gray"
 	X_button.text_size=10
 
@@ -327,7 +403,6 @@ def Make_keys():
 		uppercase = 0
 	elif(keys_exist == 1 and uppercase == 1):
 		Keyboard_box.destroy()
-		Weather_drawing.grid = [0,7,2,1]
 		Keyboard_box = Box(app,width=500,height=300, layout="grid", grid=[0,6,2,1])
 		uppercase = 0
 #Keyboard
@@ -454,6 +529,7 @@ def Make_keys():
 	Hide_button = PushButton(Keyboard_box, grid=[8,3,6,1], width=5, height=2, padx=5,pady=1, text="Hide", command =	Destroy_keys)
 	Hide_button.text_size=10
 	Hide_button.bg = "light gray"
+
 #Destroy Keyboard box
 def Destroy_keys():
 	global Keyboard_box
@@ -462,6 +538,7 @@ def Destroy_keys():
 	keys_exist = 0
 	Keyboard_box.destroy()
 	app.focus()
+
 
 Add_textbox.when_clicked = Make_keys
 
