@@ -33,12 +33,18 @@ def time_update():
 #Todo List
 ##########################################################################################################################
 global To_do_list_Title
-To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
-
 global Todolist
 global Selectedlist
 Todolist=[]
 Selectedlist=[]
+To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
+
+f = open("Todolist.txt", "r")
+with open("Todolist.txt") as f:
+	Todolist = [line.strip() for line in f]
+#print(read_data)
+f.close()
+
 
 global Display_list
 #Create List Function (Uses Button Group)
@@ -63,27 +69,35 @@ Add_textbox.bg="white"
 #Add button and add function
 #########################################################################################################
 def addto_todolist():
-    global Display_list
-    global Todolist
-    global Add_textbox
-    if(Add_textbox.value):
-        Todolist.append(Add_textbox.value)
-        Display_list.append(Add_textbox.value)
-        print(Todolist)
-        Add_textbox.clear()
+	global Display_list
+	global Todolist
+	global Add_textbox
+	if(Add_textbox.value):
+		f = open("Todolist.txt", "a")
+		f.write(Add_textbox.value + "\n")
+		f.close()
+		Todolist.append(Add_textbox.value)
+		Display_list.append(Add_textbox.value)
+		print(Todolist)
+		Add_textbox.clear()
+
 global Addbutton
 Addbutton = PushButton(app, command=addto_todolist, image="Images/add_button.png", grid=[0,4,1,1],align="right")
 
 #Delete from list Button and delete from list function
 #########################################################################################################
 def delfrom_todolist():
-    global Display_list
-    global Todolist
-    if(Display_list.value_text != ""):
-        Todolist.remove(Display_list.value_text)
-        Display_list.remove(Display_list.value_text)
-    app.focus()
-    print(Todolist)
+	global Display_list
+	global Todolist
+	if(Display_list.value_text != ""):
+		Todolist.remove(Display_list.value_text)
+		f = open("Todolist.txt", "w")
+		for i in Todolist:
+			f.write(i + "\n")
+		f.close()
+		Display_list.remove(Display_list.value_text)
+	app.focus()
+	print(Todolist)
 global delbutton
 delbutton = PushButton(app, command=delfrom_todolist, image="Images/sub_button.png", grid=[1,4,4,1],align="right")
 
@@ -97,6 +111,9 @@ def clear_todolist():
 	        Display_list.remove(i)
 	    Display_list.destroy()
 	    Todolist.clear()
+	    f = open("Todolist.txt", "w")
+	    f.write("")
+	    f.close()
 	    create_list()
 	    print(Todolist)
 global Clearbutton
@@ -147,6 +164,9 @@ def change_city():
 		global city_name
 		if(City_name_entry_textbox.value):
 			city_name = City_name_entry_textbox.value
+			f = open("Weather_loc.txt", "w")
+			f.write(city_name)
+			f.close()
 			Confirmbutton.destroy()
 			City_name_entry_textbox.destroy()
 			City_name_ask_title.destroy()
@@ -178,12 +198,14 @@ Citybutton.bg = "light gray"
 
 #Weather Drawing
 global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
-city_name = "Indio"
+city_name = ""
 def update_weather():
-    global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
-    temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
-    #temp, temp_min, temp_high, humidity, wind_speed = "87°F", "80°F", "94°F", "10%", "50 m/s"
-    description = "mist"
+	global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
+	f = open("Weather_loc.txt", "r")
+	city_name = f.read()
+	f.close()
+	#temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
+	temp, temp_min, temp_high, description, humidity, wind_speed = "87°F", "80°F", "94°F", "few clouds", "10%", "50 m/s"
 
 global Weather_drawing
 Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
