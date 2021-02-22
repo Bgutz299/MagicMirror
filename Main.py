@@ -7,10 +7,42 @@ from time import sleep
 import tkinter as tk
 import keyboard
 
+import spotipy
+import requests
+import os
+import sys
+import json
+import webbrowser
+import spotipy.util as util
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
+
+
 #Weather 
 import Weather
+
+#date and time
 import date_time
+
+#initializing App
 import App_init
+
+#Spotify
+import spotify_module
+
+#Spotify variables
+global cid
+cid = 'ae84dd0be57a443ebf92476bc190490a'
+global secret
+secret = '9c6431a32a9c4bf79dd590b912709e8c'
+global uri
+uri = 'https://Smartmirror.com/auth'
+global username
+username = ''
+global scope
+scope = 'user-read-private user-read-playback-state user-modify-playback-state'
+
+#global spot_args
+
 
 global app
 app = App_init.app_init()
@@ -116,16 +148,17 @@ def clear_todolist():
 	    f.close()
 	    create_list()
 	    print(Todolist)
+#Clear List button
+#########################################################################################################
 global Clearbutton
 Clearbutton = PushButton(app, command=clear_todolist, image="Images/clear_button.png", grid=[0,5], width=100, height=50, align="left")
 Clearbutton.bg = "light gray"
 
 #Temperature and Weather
 ############################################################################################################################################
-############################################################################################################################################
 
 def init_widgets():
-	global app, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton
+	global app, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, SpotifyButton
 	To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
 	create_list()
 	Add_textbox=TextBox(app,grid=[0,4,1,1],width=50, align="left")
@@ -139,6 +172,8 @@ def init_widgets():
 	Clearbutton.bg = "light gray"
 	Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
 	Citybutton.bg = "light gray"
+	Spotifybutton = PushButton(app, command=change_city, image="Images/spotify_button.png", grid=[0,6,1,3],align="right", width=50, height=50)
+	Spotifybutton.bg = "light gray"
 	Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
 	weather_font_color = which_color(description)
 	Image_picture = which_image(description)
@@ -154,12 +189,16 @@ def init_widgets():
 	Weather_drawing.text(150 - len(humidity),135, text= "Humidity: " + humidity, color=weather_font_color,font="Arial",size=15)
 	Weather_drawing.text(125 - len(wind_speed),155, text= "Wind Speed: " + wind_speed, color=weather_font_color,font="Arial",size=15)
 	Add_textbox.when_clicked = Make_keys
+############################################################################################################################################
+############################################################################################################################################
 
 
+#Change City function and Button
+#########################################################################################################################################################################################   
 def change_city():
 	global app
 	global window
-	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton
+	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, Spotifybutton
 	def Confirm_city():
 		global city_name
 		if(City_name_entry_textbox.value):
@@ -179,6 +218,7 @@ def change_city():
 	Addbutton.destroy()
 	delbutton.destroy()
 	Citybutton.destroy()
+	Spotifybutton.destroy()
 	Display_list.destroy()
 	Clearbutton.destroy()
 	Weather_drawing.destroy()
@@ -192,11 +232,22 @@ def change_city():
 	Confirmbutton = PushButton(app, command=Confirm_city, image="Images/Confirm.png", grid=[0,4], width=120, height=50)
 	Confirmbutton.bg = "light gray"
 	app.focus()
+
+#Change City button
+#########################################################################################################################################################################################    
 global Citybutton
 Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
 Citybutton.bg = "light gray"
+############################################################################################################################################
+############################################################################################################################################
+global Spotifybutton
+spot_args = {cid, secret, uri, username, scope} 
+Spotifybutton = PushButton(app, command=spotify_module.spotify_control, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
+Spotifybutton.bg = "black"
+
 
 #Weather Drawing
+######################################################################################################################################################################################### 
 global temp, temp_min, temp_high, description, humidity, wind_speed, city_name
 city_name = ""
 def update_weather():
