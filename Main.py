@@ -162,7 +162,7 @@ Clearbutton.bg = "light gray"
 ############################################################################################################################################
 
 def init_widgets():
-	global app, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, SpotifyButton
+	global app, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, Spotifybutton
 	To_do_list_Title = Text(app, "To-do List:", size=20, color="light gray", grid=[0,2,1,1],align="left")
 	create_list()
 	Add_textbox=TextBox(app,grid=[0,4,1,1],width=50, align="left")
@@ -176,8 +176,8 @@ def init_widgets():
 	Clearbutton.bg = "light gray"
 	Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
 	Citybutton.bg = "light gray"
-	Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,6,1,3],align="right", width=50, height=50)
-	Spotifybutton.bg = "light gray"
+	Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,5,1,1],align="right", width=50, height=50)
+	Spotifybutton.bg = "black"
 	Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
 	weather_font_color = which_color(description)
 	Image_picture = which_image(description)
@@ -245,7 +245,9 @@ Citybutton.bg = "light gray"
 ############################################################################################################################################
 ############################################################################################################################################
 #Spotify Button and function
+
 global Volume_text
+global playbackstate
 def raise_volume_spotify():
 	global Volume_text, app
 	volume_level = str(spotify_module.volume_up())
@@ -266,6 +268,7 @@ def Spotify_gui():
 		Volume_text.destroy()
 		Playbutton.destroy()
 		Pausebutton.destroy()
+		Exit_button.destroy()
 		Volume_upbutton.destroy()
 		Volume_downbutton.destroy()
 		init_widgets()
@@ -283,12 +286,12 @@ def Spotify_gui():
 
 	Volume_level = "Volume: " + str(spotify_module.fetch_volume())
 	Volume_text = Text(app, Volume_level, size=35, font="Century Gothic Bold", color="light gray", grid=[0,6,2,1],align="left")
-	Playbutton = PushButton(app, command=spotify_module.play, image="Images/play_button.png", grid=[0,4], width=50, height=50)
-	Pausebutton = PushButton(app, command=spotify_module.pause, image="Images/pause_button.png", grid=[0,5], width=50, height=50)
-	Exit_button = PushButton(app, command=spotify_exit, image="Images/pause_button.png", grid=[2,5], width=50, height=50)
+	Playbutton = PushButton(app, command=spotify_module.play, image="Images/play_button.png", grid=[0,5], width=50, height=50)
+	Pausebutton = PushButton(app, command=spotify_module.pause, image="Images/pause_button.png", grid=[1,5], align="left", width=50, height=50)
+	Exit_button = PushButton(app, command=spotify_exit, image="Images/Exit_button.png", grid=[1,7], width=100, height=60)
 
-	Volume_upbutton=PushButton(app, command=raise_volume_spotify, image="Images/volume_up.png", grid=[1,5], width=50, height=50)
-	Volume_downbutton=PushButton(app, command=decrease_volume_spotify, image="Images/volume_down.png", grid=[2,5], width=50, height=50)	
+	Volume_upbutton=PushButton(app, command=raise_volume_spotify, image="Images/volume_up.png", grid=[2,5], width=50, height=50)
+	Volume_downbutton=PushButton(app, command=decrease_volume_spotify, image="Images/volume_down.png", grid=[2,6], width=50, height=50)	
 	Playbutton.bg = "light gray"
 	Pausebutton.bg = "light gray"
 
@@ -296,7 +299,6 @@ def Spotify_gui():
 
 
 	app.focus()
-
 global Spotifybutton
 Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
 Spotifybutton.bg = "black"
