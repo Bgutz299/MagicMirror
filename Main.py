@@ -16,6 +16,11 @@ import webbrowser
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
+os.environ["SPOTIPY_CLIENT_ID"] = "ae84dd0be57a443ebf92476bc190490a"
+os.environ["SPOTIPY_CLIENT_SECRET"] = "9c6431a32a9c4bf79dd590b912709e8c"
+os.environ["SPOTIPY_REDIRECT_URI"] = "https://Smartmirror.com/auth"
+
+
 
 #Weather 
 import Weather
@@ -42,7 +47,6 @@ global scope
 scope = 'user-read-private user-read-playback-state user-modify-playback-state'
 
 #global spot_args
-
 
 global app
 app = App_init.app_init()
@@ -172,7 +176,7 @@ def init_widgets():
 	Clearbutton.bg = "light gray"
 	Citybutton = PushButton(app, command=change_city, image="Images/Change_city_button.png", grid=[0,5], width=160, height=50)
 	Citybutton.bg = "light gray"
-	Spotifybutton = PushButton(app, command=change_city, image="Images/spotify_button.png", grid=[0,6,1,3],align="right", width=50, height=50)
+	Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,6,1,3],align="right", width=50, height=50)
 	Spotifybutton.bg = "light gray"
 	Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)
 	weather_font_color = which_color(description)
@@ -240,9 +244,61 @@ Citybutton = PushButton(app, command=change_city, image="Images/Change_city_butt
 Citybutton.bg = "light gray"
 ############################################################################################################################################
 ############################################################################################################################################
+#Spotify Button and function
+global Volume_text
+def raise_volume_spotify():
+	global Volume_text, app
+	volume_level = str(spotify_module.volume_up())
+	Volume_text.value = "Volume: " + volume_level
+
+def decrease_volume_spotify():
+	global Volume_text, app
+	volume_level = str(spotify_module.volume_down())
+	Volume_text.value = "Volume: " + volume_level
+
+def Spotify_gui():
+	global app
+	global window
+	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, Spotifybutton, Volume_text
+
+	def spotify_exit():
+		Spotify_title.destroy()
+		Volume_text.destroy()
+		Playbutton.destroy()
+		Pausebutton.destroy()
+		Volume_upbutton.destroy()
+		Volume_downbutton.destroy()
+		init_widgets()
+
+	To_do_list_Title.destroy()
+	Add_textbox.destroy()
+	Addbutton.destroy()
+	delbutton.destroy()
+	Citybutton.destroy()
+	Spotifybutton.destroy()
+	Display_list.destroy()
+	Clearbutton.destroy()
+	Weather_drawing.destroy()
+	Spotify_title = Text(app, "Spotify Player", size=35, font="Century Gothic Bold", color="light gray", grid=[0,2,2,1],align="left")
+
+	Volume_level = "Volume: " + str(spotify_module.fetch_volume())
+	Volume_text = Text(app, Volume_level, size=35, font="Century Gothic Bold", color="light gray", grid=[0,6,2,1],align="left")
+	Playbutton = PushButton(app, command=spotify_module.play, image="Images/play_button.png", grid=[0,4], width=50, height=50)
+	Pausebutton = PushButton(app, command=spotify_module.pause, image="Images/pause_button.png", grid=[0,5], width=50, height=50)
+	Exit_button = PushButton(app, command=spotify_exit, image="Images/pause_button.png", grid=[2,5], width=50, height=50)
+
+	Volume_upbutton=PushButton(app, command=raise_volume_spotify, image="Images/volume_up.png", grid=[1,5], width=50, height=50)
+	Volume_downbutton=PushButton(app, command=decrease_volume_spotify, image="Images/volume_down.png", grid=[2,5], width=50, height=50)	
+	Playbutton.bg = "light gray"
+	Pausebutton.bg = "light gray"
+
+	
+
+
+	app.focus()
+
 global Spotifybutton
-spot_args = {cid, secret, uri, username, scope} 
-Spotifybutton = PushButton(app, command=spotify_module.spotify_control, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
+Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
 Spotifybutton.bg = "black"
 
 
@@ -614,7 +670,6 @@ def Destroy_keys():
 
 
 Add_textbox.when_clicked = Make_keys
-
 Time_display.repeat(1000, time_update)
 Weather_drawing.repeat(600000, update_weather)
 app.display()
