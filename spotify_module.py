@@ -20,6 +20,9 @@ devices = sp.devices()
 for i in range(len(devices['devices'])):
         if(devices['devices'][i]['name'] == "Mira"):
             deviceID = devices['devices'][i]['id']
+for i in range(len(devices['devices'])):
+    if(devices['devices'][i]['id'] == deviceID):
+        volume = devices['devices'][i]['volume_percent']
 def play():
     global sp
 ##    # User information
@@ -38,12 +41,11 @@ def pause():
     sp.pause_playback(device_id=deviceID)
 
 def fetch_volume():
+    global volume
     for i in range(len(devices['devices'])):
         if(devices['devices'][i]['id'] == deviceID):
             volume = devices['devices'][i]['volume_percent']
     return volume
-
-volume = fetch_volume()
 
 def volume_up():
     global volume

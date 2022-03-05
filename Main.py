@@ -7,18 +7,18 @@ from time import sleep
 import tkinter as tk
 import keyboard
 
-import spotipy
-import requests
-import os
-import sys
-import json
-import webbrowser
-import spotipy.util as util
-from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
+# import spotipy
+# import requests
+# import os
+# import sys
+# import json
+# import webbrowser
+# import spotipy.util as util
+# from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
-os.environ["SPOTIPY_CLIENT_ID"] = "ae84dd0be57a443ebf92476bc190490a"
-os.environ["SPOTIPY_CLIENT_SECRET"] = "9c6431a32a9c4bf79dd590b912709e8c"
-os.environ["SPOTIPY_REDIRECT_URI"] = "https://Smartmirror.com/auth"
+# os.environ["SPOTIPY_CLIENT_ID"] = "ae84dd0be57a443ebf92476bc190490a"
+# os.environ["SPOTIPY_CLIENT_SECRET"] = "9c6431a32a9c4bf79dd590b912709e8c"
+# os.environ["SPOTIPY_REDIRECT_URI"] = "https://Smartmirror.com/auth"
 
 
 
@@ -32,19 +32,19 @@ import date_time
 import App_init
 
 #Spotify
-import spotify_module
+# import spotify_module
 
-#Spotify variables
-global cid
-cid = 'ae84dd0be57a443ebf92476bc190490a'
-global secret
-secret = '9c6431a32a9c4bf79dd590b912709e8c'
-global uri
-uri = 'https://Smartmirror.com/auth'
-global username
-username = ''
-global scope
-scope = 'user-read-private user-read-playback-state user-modify-playback-state'
+# #Spotify variables
+# global cid
+# cid = 'ae84dd0be57a443ebf92476bc190490a'
+# global secret
+# secret = '9c6431a32a9c4bf79dd590b912709e8c'
+# global uri
+# uri = 'https://Smartmirror.com/auth'
+# global username
+# username = ''
+# global scope
+# scope = 'user-read-private user-read-playback-state user-modify-playback-state'
 
 #global spot_args
 
@@ -246,62 +246,65 @@ Citybutton.bg = "light gray"
 ############################################################################################################################################
 #Spotify Button and function
 
-global Volume_text
-global playbackstate
-def raise_volume_spotify():
-	global Volume_text, app
-	volume_level = str(spotify_module.volume_up())
-	Volume_text.value = "Volume: " + volume_level
+# global Volume_text
+# global playbackstate
+# def raise_volume_spotify():
+# 	global Volume_text, app
+# 	volume_level = str(spotify_module.volume_up())
+# 	Volume_text.value = "Volume: " + volume_level
 
-def decrease_volume_spotify():
-	global Volume_text, app
-	volume_level = str(spotify_module.volume_down())
-	Volume_text.value = "Volume: " + volume_level
+# def decrease_volume_spotify():
+# 	global Volume_text, app
+# 	volume_level = str(spotify_module.volume_down())
+# 	Volume_text.value = "Volume: " + volume_level
 
-def Spotify_gui():
-	global app
-	global window
-	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, Spotifybutton, Volume_text
+# def Spotify_gui():
+# 	global app
+# 	global window
+# 	global Display_list, Weather_drawing, Add_textbox, To_do_list_Title, Addbutton, delbutton, Clearbutton, Citybutton, Spotifybutton, Volume_text
 
-	def spotify_exit():
-		Spotify_title.destroy()
-		Volume_text.destroy()
-		Playbutton.destroy()
-		Pausebutton.destroy()
-		Exit_button.destroy()
-		Volume_upbutton.destroy()
-		Volume_downbutton.destroy()
-		init_widgets()
+# 	def spotify_exit():
+# 		Spotify_title.destroy()
+# 		Volume_text.destroy()
+# 		Playbutton.destroy()
+# 		Pausebutton.destroy()
+# 		Exit_button.destroy()
+# 		Volume_upbutton.destroy()
+# 		Volume_downbutton.destroy()
+# 		init_widgets()
 
-	To_do_list_Title.destroy()
-	Add_textbox.destroy()
-	Addbutton.destroy()
-	delbutton.destroy()
-	Citybutton.destroy()
-	Spotifybutton.destroy()
-	Display_list.destroy()
-	Clearbutton.destroy()
-	Weather_drawing.destroy()
-	Spotify_title = Text(app, "Spotify Player", size=35, font="Century Gothic Bold", color="light gray", grid=[0,2,2,1],align="left")
+# 	To_do_list_Title.destroy()
+# 	Add_textbox.destroy()
+# 	Addbutton.destroy()
+# 	delbutton.destroy()
+# 	Citybutton.destroy()
+# 	Spotifybutton.destroy()
+# 	Display_list.destroy()
+# 	Clearbutton.destroy()
+# 	Weather_drawing.destroy()
+# 	Spotify_title = Text(app, "Spotify Player", size=35, font="Century Gothic Bold", color="light gray", grid=[0,2,2,1],align="left")
 
-	Volume_level = "Volume: " + str(spotify_module.fetch_volume())
-	Volume_text = Text(app, Volume_level, size=35, font="Century Gothic Bold", color="light gray", grid=[0,6,2,1],align="left")
-	Playbutton = PushButton(app, command=spotify_module.play, image="Images/play_button.png", grid=[0,5], width=50, height=50)
-	Pausebutton = PushButton(app, command=spotify_module.pause, image="Images/pause_button.png", grid=[1,5], align="left", width=50, height=50)
-	Exit_button = PushButton(app, command=spotify_exit, image="Images/Exit_button.png", grid=[1,7], width=100, height=60)
+# 	Volume_level = "Volume: " + str(spotify_module.fetch_volume())
+# 	Volume_text = Text(app, Volume_level, size=35, font="Century Gothic Bold", color="light gray", grid=[0,6,2,1],align="left")
+# 	Playbutton = PushButton(app, command=spotify_module.play, image="Images/play_button.png", grid=[0,5], width=50, height=50)
+# 	Pausebutton = PushButton(app, command=spotify_module.pause, image="Images/pause_button.png", grid=[1,5], align="left", width=50, height=50)
+	
 
-	Volume_upbutton=PushButton(app, command=raise_volume_spotify, image="Images/volume_up.png", grid=[2,5], width=50, height=50)
-	Volume_downbutton=PushButton(app, command=decrease_volume_spotify, image="Images/volume_down.png", grid=[2,6], width=50, height=50)	
-	Playbutton.bg = "light gray"
-	Pausebutton.bg = "light gray"
+# 	Volume_upbutton=PushButton(app, command=raise_volume_spotify, image="Images/volume_up.png", grid=[2,5], width=50, height=50)
+# 	Volume_downbutton=PushButton(app, command=decrease_volume_spotify, image="Images/volume_down.png", grid=[2,6], width=50, height=50)	
 
+# 	Playbutton.bg = "light gray"
+# 	Pausebutton.bg = "light gray"
+
+
+# 	Exit_button = PushButton(app, command=spotify_exit, image="Images/Exit_button.png", grid=[0,8], width=100, height=60)
 	
 
 
-	app.focus()
-global Spotifybutton
-Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
-Spotifybutton.bg = "black"
+# 	app.focus()
+# global Spotifybutton
+# Spotifybutton = PushButton(app, command=Spotify_gui, image="Images/spotify_button.png", grid=[0,5,1,1], align = "right", width=50, height=50)
+# Spotifybutton.bg = "black"
 
 
 #Weather Drawing
@@ -313,8 +316,8 @@ def update_weather():
 	f = open("Weather_loc.txt", "r")
 	city_name = f.read()
 	f.close()
-	#temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
-	temp, temp_min, temp_high, description, humidity, wind_speed = "87°F", "80°F", "94°F", "few clouds", "10%", "50 m/s"
+	temp, temp_min, temp_high, description, humidity, wind_speed = Weather.fetchWeather(city_name)
+	#temp, temp_min, temp_high, description, humidity, wind_speed = "87°F", "80°F", "94°F", "few clouds", "10%", "50 m/s"
 
 global Weather_drawing
 Weather_drawing = Drawing(app,grid=[0,6,2,1],align="left",width=600,height=300)

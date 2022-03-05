@@ -1,5 +1,5 @@
 from guizero import App
-import spotify_module
+#import spotify_module
 
 def app_init():
 	app = App(title="Mira", layout="grid",bg="black",height=1024,width=600)
